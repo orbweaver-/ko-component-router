@@ -44,7 +44,7 @@ api.engine('html', require('ejs').renderFile)
 api.engine('txt', require('ejs').renderFile)
 api.set('view engine', 'html')
 
-api.use(function(req, res, next) {
+api.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
