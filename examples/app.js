@@ -1,5 +1,4 @@
 'use strict'
-
 require('../src')
 require('./views')
 
@@ -42,7 +41,7 @@ ko.components.register('app', {
         </ul>
       </div>
       <div class="col-sm-8 col-lg-9">
-        <ko-component-router params="routes: routes, default: '/home', hashbang: false"></ko-component-router>
+        <ko-component-router params="routes: routes, default: '/home', hashbang: false "></ko-component-router>
       </div>
     </div>
   </div>
