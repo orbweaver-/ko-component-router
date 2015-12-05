@@ -11,7 +11,9 @@ class App {
     this.routes = {
       '/home': 'home',
       '/nested/!': 'nested',
-      '/params/:foo/:bar': 'params'
+      '/params/:foo/:bar': 'params',
+      '/ajax': 'ajax',
+      '/ajax/:id': 'pageSearch'
     }
   }
 }
@@ -36,6 +38,7 @@ ko.components.register('app', {
           <li><a href="/home">Home</a></li>
           <li><a href="/nested">Nested</a></li>
           <li><a href="/params/lorem/ipsum">Params</a></li>
+          <li><a href="/ajax">Ajax</a></li>
         </ul>
       </div>
       <div class="col-sm-8 col-lg-9">
