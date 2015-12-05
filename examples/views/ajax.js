@@ -1,19 +1,28 @@
 'use strict'
 
+const $ = require("jquery")
 const ko = require('knockout')
 require('../../src')
 
-const api = 'http:' + window.location.origin.split(':')[1] + ':8081/page/'
+var api = "http:" + window.location.origin.split(":")[1] + ":8081/page/"
+
+function getPage(page, cb)
+{
+  $.get(page).then((res) => {
+      if(typeof res != 'string') return console.log("ERROR")
+      cb(res)
+  });
+}
 
 class Ajax {
-  constructor() {
-    this.query = ko.observable()
+  constructor(ctx) {
+    this.query = ko.observable();
   }
   search() 
   {
     if(!this.query()) return
-    history.pushState({}, 'ko-comp', '/ajax/'+this.query())
-    history.pushState({}, 'ko-comp', '/ajax/'+this.query())
+    history.pushState({}, "ko-comp", "/ajax/"+this.query())
+    history.pushState({}, "ko-comp", "/ajax/"+this.query())
     history.back()
   }
 }
@@ -24,7 +33,7 @@ ko.components.register('ajax', {
   `
     <h3>Ajax</h3>
     <p>
-      On this page you can go to any html file that was loaded into the 'pages' folder.<br>
+      On this page you can go to any ejs file that was loaded into the 'pages' folder.<br>
     </p>
     <p><b>Function</b>: ajax</p>
     <p><b>Description</b>: allows html pages to be dynamically loaded into the DOM by the use of $.get()</p>
@@ -46,10 +55,8 @@ class pageSearch
 {
   constructor(ctx){
     this.ready = ko.observable(false)
-    this.article = api + 'one'
-    //this.article = ko.observable()
+    this.article = api + "one"
     this.params = ctx.params
-    //getPage((api + "one"), (r) => {this.article(r)})
   }  
 }
 
@@ -59,6 +66,4 @@ ko.components.register('pageSearch', {
   `
     <ko-component-router params="article: article"></ko-component-router>
   `
-  //ajaxTemplate: (api + 'one')
-  //template: ko.router.get(api + 'one')
 })
