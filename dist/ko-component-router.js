@@ -61,7 +61,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	ko.components.register('ko-component-router', {
 	  viewModel: router,
-	  template: '<div data-bind=\'if: ctx.component\'>\n      <div data-bind=\'component: {\n        name: ctx.component,\n        params: ctx\n      }\'></div>\n    </div>'
+	  template: '\n    <div data-bind=\'if: ctx.component\'>\n      <div data-bind=\'component: {\n        name: ctx.component,\n        params: ctx\n      }\'></div>\n    </div>'
 	});
 
 /***/ },
