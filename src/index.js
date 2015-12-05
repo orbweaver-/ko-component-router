@@ -7,7 +7,6 @@ ko.components.register('ko-component-router', {
   viewModel: router,
   template:
     `
-    <span data-bind="html: article"></span>
     <div data-bind='if: ctx.component'>
       <div data-bind='component: {
         name: ctx.component,

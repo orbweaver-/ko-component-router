@@ -1,35 +1,23 @@
 'use strict'
 
-const $ = require("jquery")
+const $ = require('jquery')
 const ko = require('knockout')
-require('../../src')
-
-var api = "http:" + window.location.origin.split(":")[1] + ":8081/page/"
-
-function getPage(page, cb)
-{
-  $.get(page).then((res) => {
-      if(typeof res != 'string') return console.log("ERROR")
-      cb(res)
-  });
-}
 
 class Ajax {
   constructor(ctx) {
-    this.query = ko.observable();
+    this.ctx = ctx
+    this.page = ko.observable()
   }
-  search() 
-  {
-    if(!this.query()) return
-    history.pushState({}, "ko-comp", "/ajax/"+this.query())
-    history.pushState({}, "ko-comp", "/ajax/"+this.query())
-    history.back()
+
+  search() {
+    // bubble up changes to router
+    this.ctx.params.page(this.page())
   }
 }
 
 ko.components.register('ajax', {
   viewModel: Ajax,
-  template: 
+  template:
   `
     <h3>Ajax</h3>
     <p>
@@ -45,25 +33,67 @@ ko.components.register('ajax', {
     <br>
     <br>
     <p>
-      <input type="text" placeholder="Page..." data-bind="value: query">
-      <button data-bind="click: search()">Go</button>
+      <input type="text" placeholder="Page..." data-bind="value: page">
+      <button data-bind="click: search">Go</button>
     </p>
+    <hr>
+    <page params="page: page"></page>
   `
 })
 
-class pageSearch
-{
-  constructor(ctx){
-    this.ready = ko.observable(false)
-    this.article = api + "one"
-    this.params = ctx.params
-  }  
+class Page {
+  constructor(params) {
+    this.page = params.page
+    this.pageContent = ko.pureComputed(() => this.getPage()).extend({ async: false })
+  }
+
+  getPage() {
+    return typeof this.page() === 'undefined'
+      ? false
+      : $.get(`/api/page/${this.page()}`)
+  }
 }
 
-ko.components.register('pageSearch', {
-  viewModel: pageSearch,
-  template: 
+ko.components.register('page', {
+  viewModel: Page,
+  template:
   `
-    <ko-component-router params="article: article"></ko-component-router>
+    <div data-bind="if: pageContent">
+      <div data-bind="html: pageContent"></div>
+    </div>
   `
 })
+
+ko.extenders.async = function(computedDeferred, initialValue) {
+  const plainObservable = ko.observable(initialValue)
+  let currentDeferred
+
+  plainObservable.working = ko.observable(false)
+
+  ko.computed(() => {
+    if (currentDeferred) {
+      currentDeferred.reject()
+      currentDeferred = null
+    }
+
+    const newDeferred = computedDeferred()
+
+    // chained promise, wait for fulfillment
+    if (newDeferred &&
+      (typeof newDeferred.done === 'function')) {
+
+      plainObservable.working(true)
+
+      currentDeferred = $.Deferred().done((data) => {
+        plainObservable.working(false)
+        plainObservable(data)
+      })
+      newDeferred.done(currentDeferred.resolve)
+    } else {
+      // real value, publish immediately
+      plainObservable(newDeferred)
+    }
+  })
+
+  return plainObservable
+}
