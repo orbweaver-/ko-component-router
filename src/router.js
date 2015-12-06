@@ -1,6 +1,5 @@
 'use strict'
 
-const $ = require("jquery")
 const ko = require('knockout')
 const Context = require('./context')
 const Route = require('./route')
@@ -12,7 +11,7 @@ const clickEvent = ('undefined' !== typeof document) && document.ontouchstart
 const location = ('undefined' !== typeof window) && (window.history.location || window.location)
 
 class Router {
-  constructor({ routes, base = '', hashbang = false, article = '' }, bindingCtx) {
+  constructor({ routes, base = '', hashbang = false}, bindingCtx) {
     const parentRouterCtx = bindingCtx.$parentContext.$router
     let dispatch = true
     if (parentRouterCtx) {
@@ -36,12 +35,6 @@ class Router {
       this.routes[route] = new Route(route, routes[route])
     }
 
-    this.article = ko.observable("")
-    if(article)
-    {
-      this.getPage(article, (r) => {this.article(r)}) 
-    }
-
     if (dispatch) {
       const url = (this.config.hashbang && ~location.hash.indexOf('#!'))
         ? location.hash.substr(2) + location.search
@@ -51,14 +44,6 @@ class Router {
     }
   }
 
-  getPage(page, cb)
-  {
-    $.get(page).then((res) => {
-        if(typeof res != 'string') return console.log("ERROR")
-        cb(res)
-    });
-  }
-  
   dispatch(path, state, push) {
     if (path.indexOf(this.config.base) === 0) {
       path = path.replace(this.config.base, '')

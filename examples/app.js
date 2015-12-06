@@ -12,7 +12,7 @@ class App {
       '/nested/!': 'nested',
       '/params/:foo/:bar': 'params',
       '/ajax': 'ajax',
-      '/ajax/:id': 'pageSearch'
+      '/ajax/:page': 'pageSearch'
     }
   }
 }

@@ -9,7 +9,7 @@ class Ajax {
   constructor() {
     this.query = ko.observable()
   }
-  search() 
+  search()
   {
     if(!this.query()) return
     history.pushState({}, 'ko-comp', '/ajax/'+this.query())
@@ -20,7 +20,7 @@ class Ajax {
 
 ko.components.register('ajax', {
   viewModel: Ajax,
-  template: 
+  template:
   `
     <h3>Ajax</h3>
     <p>
@@ -42,23 +42,23 @@ ko.components.register('ajax', {
   `
 })
 
-class pageSearch
-{
+class pageSearch {
   constructor(ctx){
     this.ready = ko.observable(false)
-    this.article = api + 'one'
+    this.article = api + ctx.params.page()
     //this.article = ko.observable()
     this.params = ctx.params
     //getPage((api + "one"), (r) => {this.article(r)})
-  }  
+  }
 }
 
 ko.components.register('pageSearch', {
   viewModel: pageSearch,
-  template: 
+  template:
   `
-    <ko-component-router params="article: article"></ko-component-router>
+    <ko-router-ajax params="article: article"></ko-router-ajax>
   `
+  //<ko-component-router params="article: article"></ko-component-router>
   //ajaxTemplate: (api + 'one')
   //template: ko.router.get(api + 'one')
 })
