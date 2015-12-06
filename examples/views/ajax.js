@@ -46,9 +46,7 @@ class pageSearch {
   constructor(ctx){
     this.ready = ko.observable(false)
     this.article = api + ctx.params.page()
-    //this.article = ko.observable()
     this.params = ctx.params
-    //getPage((api + "one"), (r) => {this.article(r)})
   }
 }
 
@@ -58,7 +56,4 @@ ko.components.register('pageSearch', {
   `
     <ko-router-ajax params="article: article"></ko-router-ajax>
   `
-  //<ko-component-router params="article: article"></ko-component-router>
-  //ajaxTemplate: (api + 'one')
-  //template: ko.router.get(api + 'one')
 })
