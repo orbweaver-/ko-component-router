@@ -17,18 +17,18 @@ ko.components.register('ko-component-router', {
     </div>`
 })
 
-<<<<<<< HEAD
 ko.components.register('ko-router-markdown', {
   viewModel: M,
   template:
   `
     <span data-bind="html: text()"></span>
-=======
+  `
+})
+
 ko.components.register('ko-router-ajax', {
   viewModel: ajax,
   template:
   `
     <span data-bind="html: article"></span>
->>>>>>> ajax_original
   `
 })

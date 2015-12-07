@@ -11,7 +11,7 @@ class App {
       '/home': 'home',
       '/nested/!': 'nested',
       '/params/:foo/:bar': 'params',
-      '/md': 'markdown'
+      '/md': 'markdown',
       '/ajax': 'ajax',
       '/ajax/:page': 'pageSearch'
     }
