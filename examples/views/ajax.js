@@ -55,4 +55,3 @@ ko.components.register('pageSearch', {
     <ko-router-ajax params="article: article"></ko-router-ajax>
   `
 })
-//<ko-component-router params="article: article, markdown: true"></ko-component-router>

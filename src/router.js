@@ -12,8 +12,8 @@ const location = ('undefined' !== typeof window) && (window.history.location || 
 
 class Router {
   constructor({ routes, base = '', hashbang = false, article = '', markdown = false}, bindingCtx) {
-    //if(article != '') require('./')(markdown, article, (a) => this.article = a)
-
+    this.article = ko.observable('')
+    if(article != '') require('./mdajax')(markdown, article, (a) => this.article(a))
     const parentRouterCtx = bindingCtx.$parentContext.$router
     let dispatch = true
     if (parentRouterCtx) {

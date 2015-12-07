@@ -13,7 +13,8 @@ class App {
       '/params/:foo/:bar': 'params',
       '/md': 'markdown',
       '/ajax': 'ajax',
-      '/ajax/:page': 'pageSearch'
+      '/ajax/:page': 'pageSearch',
+      '/mdajax': 'mdajax'
     }
   }
 }
@@ -40,6 +41,7 @@ ko.components.register('app', {
           <li><a href="/params/lorem/ipsum">Params</a></li>
           <li><a href="/md">Markdown</a></li>
           <li><a href="/ajax">Ajax</a></li>
+          <li><a href="/mdajax">Markdown Ajax</a></li>
         </ul>
       </div>
       <div class="col-sm-8 col-lg-9">
