@@ -44,9 +44,7 @@ ko.components.register('ajax', {
 
 class pageSearch {
   constructor(ctx){
-    this.ready = ko.observable(false)
     this.article = api + ctx.params.page()
-    this.params = ctx.params
   }
 }
 
@@ -57,3 +55,4 @@ ko.components.register('pageSearch', {
     <ko-router-ajax params="article: article"></ko-router-ajax>
   `
 })
+//<ko-component-router params="article: article, markdown: true"></ko-component-router>

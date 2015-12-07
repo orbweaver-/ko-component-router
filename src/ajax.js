@@ -20,4 +20,10 @@ class ajax {
     }
 }
 
-module.exports = ajax
+ko.components.register('ko-router-ajax', {
+  viewModel: ajax,
+  template:
+  `
+    <span data-bind="html: article"></span>
+  `
+})

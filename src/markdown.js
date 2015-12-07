@@ -3,10 +3,16 @@
 const ko = require('knockout')
 const md = require('marked')
 
-class Md {
+class M {
   constructor({text = ''}) {
     this.text  = ko.observable(md(text()))
   }
 }
 
-module.exports = Md
+ko.components.register('ko-router-markdown', {
+  viewModel: M,
+  template:
+  `
+    <span data-bind="html: text()"></span>
+  `
+})

@@ -11,7 +11,9 @@ const clickEvent = ('undefined' !== typeof document) && document.ontouchstart
 const location = ('undefined' !== typeof window) && (window.history.location || window.location)
 
 class Router {
-  constructor({ routes, base = '', hashbang = false}, bindingCtx) {
+  constructor({ routes, base = '', hashbang = false, article = '', markdown = false}, bindingCtx) {
+    //if(article != '') require('./')(markdown, article, (a) => this.article = a)
+
     const parentRouterCtx = bindingCtx.$parentContext.$router
     let dispatch = true
     if (parentRouterCtx) {
