@@ -3,3 +3,4 @@
 require('./home')
 require('./nested')
 require('./params')
+require('./md')
