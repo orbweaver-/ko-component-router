@@ -1,5 +1,4 @@
 'use strict'
-
 require('../src')
 require('./views')
 
@@ -13,6 +12,8 @@ class App {
       '/nested/!': 'nested',
       '/params/:foo/:bar': 'params',
       '/md': 'markdown'
+      '/ajax': 'ajax',
+      '/ajax/:page': 'pageSearch'
     }
   }
 }
@@ -38,10 +39,11 @@ ko.components.register('app', {
           <li><a href="/nested">Nested</a></li>
           <li><a href="/params/lorem/ipsum">Params</a></li>
           <li><a href="/md">Markdown</a></li>
+          <li><a href="/ajax">Ajax</a></li>
         </ul>
       </div>
       <div class="col-sm-8 col-lg-9">
-        <ko-component-router params="routes: routes, default: '/home', hashbang: false"></ko-component-router>
+        <ko-component-router params="routes: routes, default: '/home', hashbang: false "></ko-component-router>
       </div>
     </div>
   </div>

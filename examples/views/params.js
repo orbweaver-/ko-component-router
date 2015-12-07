@@ -17,3 +17,4 @@ ko.components.register('params', {
     <strong>bar:</strong> <input type="text" data-bind="value: params.bar"></em>
   `
 })
+ 
