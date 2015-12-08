@@ -1,14 +1,12 @@
 'use strict'
 
 require('./markdown')
-require('./ajax')
 const ko = require('knockout')
 const router = require('./router')
 
 ko.components.register('ko-component-router', {
   viewModel: router,
-  template:
-    `
+  template: `
     <span data-bind="html: article"></span>
     <div data-bind='if: ctx.component'>
       <div data-bind='component: {

@@ -8,14 +8,12 @@ const api = window.location.origin.split(':')[0] + ":" + window.location.origin.
 class MdAjax {
   constructor(){
     this.article = ko.observable(api + 'md')
-    console.log(this.article())
   }
 }
 
 ko.components.register('mdajax', {
   viewModel: MdAjax,
-  template:
-  `
+  template: `
     <ko-component-router params="article: article, markdown: true"></ko-component-router>
   `
 })

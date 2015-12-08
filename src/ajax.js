@@ -1,29 +1,14 @@
 'use strict'
 
+const marked = require('marked')
 const $ = require('jquery')
-const ko = require('knockout')
 
-class ajax {
-    constructor({article = ''}) {
-      this.article = ko.observable('')
-      if(article)
-      {
-        this.getPage(article, (r) => {this.article(r)})
-      }
-    }
+function getPage(page, cb) {$.get(page).then((res) => cb(res))}
 
-    getPage(page, cb)
-    {
-      $.get(page).then((res) => {
-          cb(res)
-      })
-    }
+module.exports = (md, article, cb) => {
+    getPage(article(), (r) => {
+      if(!md) return cb(r)
+      r = marked(r)
+      return cb(r)
+    })
 }
-
-ko.components.register('ko-router-ajax', {
-  viewModel: ajax,
-  template:
-  `
-    <span data-bind="html: article"></span>
-  `
-})

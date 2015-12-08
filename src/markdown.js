@@ -1,18 +1,19 @@
 'use strict'
 
 const ko = require('knockout')
-const md = require('marked')
+const marked = require('marked')
 
 class M {
   constructor({text = ''}) {
-    this.text  = ko.observable(md(text()))
+    this.text = ko.observable()
+    if((typeof text).toString() == 'function') return this.text(marked(text()))
+    return this.text(marked(text))
   }
 }
 
 ko.components.register('ko-router-markdown', {
   viewModel: M,
-  template:
-  `
+  template: `
     <span data-bind="html: text()"></span>
   `
 })

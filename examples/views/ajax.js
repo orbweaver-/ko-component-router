@@ -20,8 +20,7 @@ class Ajax {
 
 ko.components.register('ajax', {
   viewModel: Ajax,
-  template:
-  `
+  template: `
     <h3>Ajax</h3>
     <p>
       On this page you can go to any html file that was loaded into the 'pages' folder.<br>
@@ -44,14 +43,13 @@ ko.components.register('ajax', {
 
 class pageSearch {
   constructor(ctx){
-    this.article = api + ctx.params.page()
+    this.article = ko.observable(api + ctx.params.page())
   }
 }
 
 ko.components.register('pageSearch', {
   viewModel: pageSearch,
-  template:
-  `
-    <ko-router-ajax params="article: article"></ko-router-ajax>
+  template: `
+    <ko-component-router params="article: article"></ko-component-router>
   `
 })
