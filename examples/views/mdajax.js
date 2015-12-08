@@ -3,7 +3,7 @@
 const ko = require('knockout')
 require('../../src')
 
-const api = window.location.origin.split(':')[0] + ":" + window.location.origin.split(':')[1] + ':8081/page/'
+const api = window.location.origin.split(':')[0] + ':' + window.location.origin.split(':')[1] + ':8081/page/'
 
 class MdAjax {
   constructor(){
