@@ -54,8 +54,8 @@ api.use((req, res, next) => {
 
 
 api.get('/page/:id', (req, res) => {
-  let url = path.resolve(__dirname, 'pages/' + req.params.id)
-  fs.stat(url+ ".html", function(err, stats){
+  const url = path.resolve(__dirname, 'pages/' + req.params.id)
+  fs.stat(url+ '.html', (err, stats) => {
     if (stats)
       res.render(url)
     else
