@@ -14,6 +14,6 @@ class fourOhfour {
 ko.components.register('404', {
   viewModel: fourOhfour,
   template: `
-    <ko-component-router params="article: article, markdown: true"></ko-component-router>
+    <ko-component-router params="article: article"></ko-component-router>
   `
 })

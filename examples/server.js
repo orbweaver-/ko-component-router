@@ -1,5 +1,6 @@
 'use strict'
 
+const fs = require('fs')
 const app = require('express')()
 const api = require('express')()
 const path = require('path')
@@ -38,8 +39,9 @@ app.get('*',            (req, res) => res.sendFile(path.resolve(__dirname, 'inde
 app.listen(8080, () => { console.log('Examples running at localhost:8080') })
 
 
-//express settings
+//api settings
 api.set('views', __dirname + '/pages')
+
 api.engine('html', require('ejs').renderFile)
 api.engine('txt', require('ejs').renderFile)
 api.set('view engine', 'html')
@@ -51,5 +53,13 @@ api.use((req, res, next) => {
 })
 
 
-api.get('/page/:id', (req, res) => res.render(path.resolve(__dirname, 'pages/' + req.params.id)))
-api.listen(8081, () => { console.log('API running at localhost:8081') }) 
+api.get('/page/:id', (req, res) => {
+  let url = path.resolve(__dirname, 'pages/' + req.params.id)
+  fs.stat(url+ ".html", function(err, stats){
+    if (stats)
+      res.render(url)
+    else
+      res.render(path.resolve(__dirname, 'pages/404'))
+  })
+})
+api.listen(8081, () => { console.log('API running at localhost:8081') })
