@@ -9,7 +9,8 @@ class NestedRouter {
       '/bar': 'bar',
       '/baz': 'baz',
       '/qux': 'qux',
-      '/params/:foo/:bar': 'params'
+      '/params/:foo/:bar': 'params',
+      '/*': '404'
     }
   }
 }

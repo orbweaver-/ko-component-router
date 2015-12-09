@@ -8,13 +8,14 @@ window.ko = ko
 class App {
   constructor() {
     this.routes = {
-      '/home': 'home',
+      '/': 'home',
       '/nested/!': 'nested',
       '/params/:foo/:bar': 'params',
       '/md': 'markdown',
       '/ajax': 'ajax',
       '/ajax/:page': 'pageSearch',
-      '/mdajax': 'mdajax'
+      '/mdajax': 'mdajax',
+      '/*': '404'
     }
   }
 }
@@ -36,7 +37,7 @@ ko.components.register('app', {
     <div class="row">
       <div class="col-sm-4 col-lg-3">
         <ul class="nav nav-pills nav-stacked">
-          <li><a href="/home">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/nested">Nested</a></li>
           <li><a href="/params/lorem/ipsum">Params</a></li>
           <li><a href="/md">Markdown</a></li>
@@ -45,7 +46,7 @@ ko.components.register('app', {
         </ul>
       </div>
       <div class="col-sm-8 col-lg-9">
-        <ko-component-router params="routes: routes, default: '/home', hashbang: false "></ko-component-router>
+        <ko-component-router params="routes: routes, default: '/', hashbang: false "></ko-component-router>
       </div>
     </div>
   </div>
