@@ -56,9 +56,8 @@ class Query {
               [guid]: { [prop]: v }
             }, false)
 
-            ctx
-              .update(pathname + hash, ctx.state(), false, query.getNonDefaultParams()[guid])
-              .then(() => trigger(!trigger()))
+            const update = ctx.update(pathname + hash, ctx.state(), false, query.getNonDefaultParams()[guid])
+            update && update.then(() => trigger(!trigger()))
           },
           owner: {
             prev: null

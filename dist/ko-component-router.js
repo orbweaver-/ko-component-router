@@ -68,11 +68,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_knockout2.default.components.register('ko-component-router', {
+	if (!_knockout2.default.components.isRegistered('ko-component-router')) _knockout2.default.components.register('ko-component-router', {
 	  synchronous: true,
 	  viewModel: _router2.default,
-	  template: '<div data-bind=\'if: ctx.route().component\'>\n      <div class="component-wrapper" data-bind=\'component: {\n        name: ctx.route().component,\n        params: ctx\n      }\'></div>\n    </div>'
+	  template: '<div data-bind=\'if: ctx.route().component\'>\n        <div class="component-wrapper" data-bind=\'component: {\n          name: ctx.route().component,\n          params: ctx\n        }\'></div>\n      </div>'
 	});
+
+	module.exports = {
+	  context: __webpack_require__(3).default,
+	  query: __webpack_require__(8),
+	  route: __webpack_require__(11).default
+	};
 
 /***/ },
 /* 1 */
@@ -933,6 +939,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Utils = __webpack_require__(6);
 
+	var has = Object.prototype.hasOwnProperty;
+
 	var defaults = {
 	    delimiter: '&',
 	    depth: 5,
@@ -953,21 +961,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var part = parts[i];
 	        var pos = part.indexOf(']=') === -1 ? part.indexOf('=') : part.indexOf(']=') + 1;
 
+	        var key, val;
 	        if (pos === -1) {
-	            obj[options.decoder(part)] = '';
-
-	            if (options.strictNullHandling) {
-	                obj[options.decoder(part)] = null;
-	            }
+	            key = options.decoder(part);
+	            val = options.strictNullHandling ? null : '';
 	        } else {
-	            var key = options.decoder(part.slice(0, pos));
-	            var val = options.decoder(part.slice(pos + 1));
-
-	            if (Object.prototype.hasOwnProperty.call(obj, key)) {
-	                obj[key] = [].concat(obj[key]).concat(val);
-	            } else {
-	                obj[key] = val;
-	            }
+	            key = options.decoder(part.slice(0, pos));
+	            val = options.decoder(part.slice(pos + 1));
+	        }
+	        if (has.call(obj, key)) {
+	            obj[key] = [].concat(obj[key]).concat(val);
+	        } else {
+	            obj[key] = val;
 	        }
 	    }
 
@@ -1029,7 +1034,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (segment[1]) {
 	        // If we aren't using plain objects, optionally prefix keys
 	        // that would overwrite object prototype properties
-	        if (!options.plainObjects && Object.prototype.hasOwnProperty(segment[1])) {
+	        if (!options.plainObjects && has.call(Object.prototype, segment[1])) {
 	            if (!options.allowPrototypes) {
 	                return;
 	            }
@@ -1043,7 +1048,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var i = 0;
 	    while ((segment = child.exec(key)) !== null && i < options.depth) {
 	        i += 1;
-	        if (!options.plainObjects && Object.prototype.hasOwnProperty(segment[1].replace(/\[|\]/g, ''))) {
+	        if (!options.plainObjects && has.call(Object.prototype, segment[1].replace(/\[|\]/g, ''))) {
 	            if (!options.allowPrototypes) {
 	                continue;
 	            }
@@ -1189,7 +1194,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	              (0, _utils.merge)(qsParams, _defineProperty({}, guid, _defineProperty({}, prop, v)), false);
 
-	              ctx.update(pathname + hash, ctx.state(), false, query.getNonDefaultParams()[guid]).then(function () {
+	              var update = ctx.update(pathname + hash, ctx.state(), false, query.getNonDefaultParams()[guid]);
+	              update && update.then(function () {
 	                return trigger(!trigger());
 	              });
 	            },
