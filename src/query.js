@@ -88,12 +88,15 @@ class Query {
             }
           }
         }, this)
+      : ko.toJS(mapKeys(qsParams[guid] || {}, (prop) => this.get(prop)()))
+        /*
       : ko.toJS(mapKeys(qsParams[guid] || {}, (prop) =>
           cache[guid] && cache[guid][prop]
             ? isUndefined(qsParams[guid][prop])
               ? undefined
               : cache[guid][prop].parser(qsParams[guid][prop])
             : qsParams[guid][prop]))
+        */
   }
 
   setDefaults(q, parser = identity) {

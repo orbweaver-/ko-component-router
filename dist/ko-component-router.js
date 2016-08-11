@@ -1218,6 +1218,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getAll',
 	    value: function getAll() {
+	      var _this = this;
+
 	      var asObservable = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 	      var pathname = arguments.length <= 1 || arguments[1] === undefined ? this.ctx.pathname() : arguments[1];
 
@@ -1232,9 +1234,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.get(pn)(q[pn]);
 	          }
 	        }
-	      }, this) : _knockout2.default.toJS((0, _utils.mapKeys)(qsParams[guid] || {}, function (prop) {
-	        return cache[guid] && cache[guid][prop] ? (0, _utils.isUndefined)(qsParams[guid][prop]) ? undefined : cache[guid][prop].parser(qsParams[guid][prop]) : qsParams[guid][prop];
-	      }));
+	      }, this) : (0, _utils.mapKeys)(qsParams[guid] || {}, function (prop) {
+	        return _this.get(prop)();
+	      });
+	      /*
+	      : ko.toJS(mapKeys(qsParams[guid] || {}, (prop) =>
+	        cache[guid] && cache[guid][prop]
+	          ? isUndefined(qsParams[guid][prop])
+	            ? undefined
+	            : cache[guid][prop].parser(qsParams[guid][prop])
+	          : qsParams[guid][prop]))
+	      */
 	    }
 	  }, {
 	    key: 'setDefaults',
