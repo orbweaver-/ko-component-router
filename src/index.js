@@ -2,6 +2,8 @@ import ko from 'knockout'
 import router from './router'
 import './binding'
 
+ko.components.register('__KO_ROUTER_EMPTY_COMPONENT__', { template: '<span></span>' })
+
 if (!ko.components.isRegistered('ko-component-router'))
   ko.components.register('ko-component-router', {
     synchronous: true,
@@ -14,6 +16,7 @@ if (!ko.components.isRegistered('ko-component-router'))
         }'></div>
       </div>`
   })
+
 
 module.exports = {
   context: require('./context').default,
